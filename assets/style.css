@@ -133,7 +133,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0 0 70px 0;
     background-color: #f4f4f4;
 }
 
@@ -147,16 +147,21 @@ header {
 header nav ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
 }
 
 header nav ul li {
-    display: inline;
-    margin-right: 20px;
+    margin: 0;
 }
 
 header nav ul li a {
     color: white;
     text-decoration: none;
+    padding: 8px 10px;
+    display: inline-block;
 }
 
 #cart {
@@ -190,14 +195,12 @@ button:hover {
 }
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: relative;
     width: 100%;
     background-color: black;
     color: white;
     text-align: center;
-
+    padding: 12px 0;
 }
 
 #shop {
@@ -207,24 +210,29 @@ footer {
 
 .products {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 12px;
 }
 
 .product {
     background-color: white;
     padding: 20px;
     border: 1px solid #ddd;
-    width: 200px;
+    width: 220px;
+    max-width: 100%;
+    box-sizing: border-box;
     text-align: center;
-}
-
-.product {
+    flex: 1 1 220px;
+    min-width: 200px;
     position: relative;
 }
 
 .product img {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    max-width: 140px;
+    height: auto;
     object-fit: cover;
     display: block;
     margin: 0 auto;
@@ -232,21 +240,23 @@ footer {
 
 /* Carousel styles */
 .carousel {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 6px;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin: 0 auto 12px;
     overflow: hidden;
 }
 
 .carousel-track {
     display: flex;
     transition: transform 0.3s ease;
-    height: 100%;
+    height: auto;
 }
 
 .carousel-track img {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    height: auto;
+    max-height: 160px;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -493,6 +503,32 @@ main {
 
     .hero-content h2 {
         font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+
+    header h1 img {
+        width: 60px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    header nav ul {
+        gap: 10px;
+    }
+
+    .product {
+        padding: 16px;
+    }
+
+    .carousel-btn {
+        padding: 4px 6px;
+        font-size: 12px;
     }
 }
 
