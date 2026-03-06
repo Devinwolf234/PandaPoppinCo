@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Panda Poppin Co</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <header>
+        <h1><img src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="100">
+            Panda Poppin Co Store
+            <img src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="100">
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="index.html#shop">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html">View Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="contact-hero">
+            <div class="hero-gradient">
+                <div class="hero-content">
+                    <h2>Get in Touch</h2>
+                    <p class="lead">Questions, collabs, or just saying hi — we'd love to hear from you.</p>
+                </div>
+                <div class="floating-circles" aria-hidden="true"></div>
+            </div>
+            <div class="contact-wrap">
+                <aside class="contact-card">
+                    <h3>Reach Us</h3>
+                    <p>Email: <a href="mailto:contact@huntingstore.com">contact@huntingstore.com</a></p>
+                    <p>Instagram: <a href="https://www.instagram.com/pandapoppinco" target="_blank">@pandapoppinco</a>
+                    </p>
+                    <p>YouTube: <a href="https://www.youtube.com/@pandapoppinco" target="_blank">Panda Poppin Co</a></p>
+                    <div class="social-links">
+                        <a class="social insta" href="https://www.instagram.com/pandapoppinco"
+                            target="_blank">Instagram</a>
+                        <a class="social yt" href="https://www.youtube.com/@pandapoppinco" target="_blank">YouTube</a>
+                    </div>
+                </aside>
+
+                <form class="contact-form" action="#" method="post"
+                    onsubmit="alert('Thanks — message sent (demo)'); return false;">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" placeholder="Your name" required>
+
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell us what's up..."
+                        required></textarea>
+
+                    <button class="fancy-btn" type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Panda Poppin Co</p>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>

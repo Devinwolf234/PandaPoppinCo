@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - Hunting Clothing Store</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+  <header>
+    <h1><img src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="80"> Panda Poppin Co Store<img
+        src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="80"></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html#shop">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">View Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="cart-hero">
+      <div class="hero-small">
+        <div class="hero-inner">
+          <h2>Your Cart</h2>
+          <p class="subtitle">Review items, adjust quantities, and pop to checkout.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cart-page">
+      <div class="cart-wrap">
+        <div class="cart-items" id="cart-items">
+          <!-- Example fallback item; your app.js can populate real items -->
+          <div class="cart-item-card empty-state">
+            <p>Your cart is empty. <a href="index.html#shop">Continue shopping</a></p>
+          </div>
+        </div>
+
+        <aside class="cart-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+          <div class="summary-row"><span>Shipping</span><span id="shipping">Free</span></div>
+          <div class="summary-total"><strong>Total</strong><strong id="total-price">$0.00</strong></div>
+          <div class="summary-actions">
+            <a class="btn ghost" href="index.html#shop">Continue Shopping</a>
+            <button class="btn primary" onclick="checkout()">Checkout</button>
+          </div>
+          <p class="small">Questions? <a href="contact.html">Contact us</a> or learn more <a href="about.html">about
+              us</a>.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Panda Poppin Co</p>
+  </footer>
+
+  <script src="scripts/app.js"></script>
+</body>
+
+</html>

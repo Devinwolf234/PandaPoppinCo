@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda Poppin Co</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <header>
+        <h1><img src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="100">
+            Panda Poppin Co Store
+            <img src="assets/images/logo.jpg" alt="Panda Poppin Logo" width="100">
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html">View Cart</a></li> <!-- Link to Cart -->
+            </ul>
+        </nav>
+    </header>
+
+    <section id="shop">
+        <h2>Shop Our Products</h2>
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <div class="carousel">
+                    <button class="carousel-btn prev" aria-label="Previous image">◀</button>
+                    <div class="carousel-track">
+                        <img src="assets/images/hoodie.png" alt="Hunting hoodie">
+                        <img src="assets/images/hoodie2.jpg" alt="Hunting hoodie">
+                        <img src="assets/images/hoodie3.jpg" alt="Hunting hoodie">
+                        <img src="assets/images/hoodie4.jpg" alt="Hunting hoodie">
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next image">▶</button>
+                </div>
+                <h3>Hunting Hoodie</h3>
+                <p>$50.00</p>
+                <button class="view-more-btn" data-product="Hunting Hoodie" data-price="50">View More</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <div class="carousel">
+                    <button class="carousel-btn prev" aria-label="Previous image">◀</button>
+                    <div class="carousel-track">
+                        <img src="assets/images/hat.png" alt="Hunting Hat">
+                        <img src="assets/images/hat.png" alt="Hunting Hat">
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next image">▶</button>
+                </div>
+                <h3>Hunting Hat</h3>
+                <p>$20.00</p>
+                <button class="view-more-btn" data-product="Hunting Hat" data-price="20">View More</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <div class="carousel">
+                    <button class="carousel-btn prev" aria-label="Previous image">◀</button>
+                    <div class="carousel-track">
+                        <img src="assets/images/tee.png" alt="Hunting tee">
+                        <img src="assets/images/tee.png" alt="Hunting tee">
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next image">▶</button>
+                </div>
+                <h3>Hunting tee</h3>
+                <p>$35.00</p>
+                <button class="view-more-btn" data-product="Hunting tee" data-price="35">View More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Single Product Modal (moved out for cleanliness) -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content modal-grid">
+            <button class="close-modal" aria-label="Close">&times;</button>
+
+            <div class="modal-left">
+                <div id="modal-carousel-container"></div>
+            </div>
+
+            <div class="modal-right">
+                <h2 id="modal-product-name">Product</h2>
+                <p class="modal-price">Price: $<span id="modal-price">0.00</span></p>
+                <form id="product-options-form">
+                    <label for="modal-size">Size</label>
+                    <select id="modal-size" name="size" class="modal-dropdown" required>
+                        <option value="">Select size</option>
+                        <option value="S">Small</option>
+                        <option value="M">Medium</option>
+                        <option value="L">Large</option>
+                        <option value="XL">XL</option>
+                    </select>
+
+                    <label>Color</label>
+                    <div id="modal-colors" class="swatch-grid" role="list" aria-label="Choose color"></div>
+                    <input type="hidden" name="color" id="modal-color" required>
+
+                    <label for="modal-qty">Quantity</label>
+                    <input id="modal-qty" type="number" min="1" value="1" style="width:80px;">
+
+                    <div class="modal-actions">
+                        <button type="submit" id="add-to-cart-modal" class="fancy-btn">Add to Cart</button>
+                        <button type="button" class="btn ghost" onclick="document.getElementById('product-modal').style.display='none'">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer>
+        <p>&copy; 2026 Panda Poppin Co</p>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>
