@@ -267,18 +267,6 @@ function loadCart() {
   if (totalPriceContainer) totalPriceContainer.textContent = `$${totalPrice.toFixed(2)}`;
 }
 
-// Checkout function (for simplicity, it just clears the cart)
-function checkout() {
-  if (cart.length === 0) {
-    alert('Your cart is empty!');
-  } else {
-    alert('Proceeding to checkout...');
-    cart = []; // Clear cart after checkout
-    localStorage.setItem('cart', JSON.stringify(cart)); // Save empty cart to localStorage
-    window.location.href = 'index.html'; // Redirect to homepage
-  }
-}
-
 // Run loadCart() when cart page is loaded
 if (window.location.pathname.includes('cart.html')) {
   loadCart();
@@ -334,43 +322,114 @@ if (document.querySelector('.carousel')) {
 }
 
 async function submitOrder(order) {
-  const url = "https://script.google.com/macros/s/AKfycbxoHc6y-h-J-esV2IAvpw5LzAqeEYeQbv_f7CTrmCkTOHdQK0ngep21KMEBVQ7vGSUO/exec"; // replace with your Apps Script URL
+  const url = "https://script.google.com/macros/s/AKfycbxsjjZ19UaZKMtA1SBGRurzJOk66g41p-xYqcAB0I8MXo_x8Ol7U8jEygDlhg0vEdZ5/exec"; // replace with your Apps Script Web App URL
+
+  if (url.includes("AKfycbxoHc6y-h-J-esV2IAvpw5LzAqeEYeQbv_f7CTrmCkTOHdQK0ngep21KMEBVQ7vGSUO")) {
+    console.warn("submitOrder: using placeholder Apps Script URL. Update to your deployed Web App URL in scripts/app.js");
+  }
+
+  function setOrderError(message) {
+    const el = document.getElementById('order-error');
+    if (!el) return;
+    el.textContent = message;
+    el.style.display = 'block';
+  }
+
+  function clearOrderError() {
+    const el = document.getElementById('order-error');
+    if (!el) return;
+    el.style.display = 'none';
+    el.textContent = '';
+  }
+
+  clearOrderError();
 
   try {
+    console.log('submitOrder: sending to', url);
+    console.log('submitOrder: order body', order);
+
     const response = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(order),
-      headers: {
-        "Content-Type": "application/json"
-      }
+      mode: "no-cors", // avoids CORS preflight failures
+      body: JSON.stringify(order)
     });
 
-    const result = await response.json();
-    if (result.status === "success") {
+    // When using no-cors, the response is opaque and cannot be read; assume success.
+    if (response.type === 'opaque' || response.ok) {
+      clearOrderError();
       alert("Order submitted! Thank you!");
-    } else {
-      alert("There was a problem submitting your order.");
+      return true;
     }
+
+    const text = await response.text();
+    console.error("submitOrder: non-2xx response", response.status, text);
+    setOrderError(`Error sending order (HTTP ${response.status}):\n${text}`);
+    alert(`Error sending order (HTTP ${response.status}). See page for details.`);
+    return false;
   } catch (err) {
-    console.error(err);
-    alert("Error sending order. Check console for details.");
+    console.error("Error sending order to sheet:", err);
+
+    // Common browser failure: blocked by CORS/origin (file://) or network.
+    const msg = err && err.message ? err.message : String(err);
+    setOrderError(`Error sending order:\n${msg}`);
+
+    if (msg.toLowerCase().includes('failed to fetch')) {
+      alert(
+        "Error sending order: Failed to fetch.\n" +
+        "1) Make sure you are running the site via http://localhost (not file://).\n" +
+        "2) Confirm your Apps Script Web App is deployed for 'Anyone' / 'Anyone with link'.\n" +
+        "3) Check the console Network tab for more details."
+      );
+    } else {
+      alert(`Error sending order: ${msg}`);
+    }
+
+    return false;
   }
 }
 
-document.getElementById("product-options-form").addEventListener("submit", function(e){
-  e.preventDefault();
+async function checkout() {
+  if (window.location.protocol === 'file:') {
+    alert(
+      'Please run the site through a local server (e.g. `python -m http.server`)\n' +
+      'and open via http://localhost, otherwise the order request will be blocked.'
+    );
+    return;
+  }
+
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+
+  const name = prompt('Enter your name (for order confirmation):');
+  if (!name) {
+    alert('Name is required to place an order.');
+    return;
+  }
+
+  const email = prompt('Enter your email (for order confirmation):');
+  if (!email) {
+    alert('Email is required to place an order.');
+    return;
+  }
 
   const order = {
-    name: prompt("Enter your name"),  // or get from a dedicated input field
-    email: prompt("Enter your email"),
-    product: document.getElementById("modal-product-name").innerText,
-    size: document.getElementById("modal-size").value,
-    color: document.getElementById("modal-color").value,
-    quantity: document.getElementById("modal-qty").value
+    submittedAt: new Date().toISOString(),
+    customerName: name,
+    customerEmail: email,
+    items: cart.map(item => ({
+      name: item.name,
+      quantity: item.qty,
+      unitPrice: item.price
+    })),
+    total: cart.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0)
   };
 
-  submitOrder(order);
-
-  // Optional: close modal
-  document.getElementById("product-modal").style.display = "none";
-});
+  const sent = await submitOrder(order);
+  if (sent) {
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = 'index.html';
+  }
+}
