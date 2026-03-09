@@ -332,3 +332,45 @@ function initCarousels() {
 if (document.querySelector('.carousel')) {
   initCarousels();
 }
+
+async function submitOrder(order) {
+  const url = "https://script.google.com/macros/s/AKfycbxoHc6y-h-J-esV2IAvpw5LzAqeEYeQbv_f7CTrmCkTOHdQK0ngep21KMEBVQ7vGSUO/exec"; // replace with your Apps Script URL
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(order),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const result = await response.json();
+    if (result.status === "success") {
+      alert("Order submitted! Thank you!");
+    } else {
+      alert("There was a problem submitting your order.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error sending order. Check console for details.");
+  }
+}
+
+document.getElementById("product-options-form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const order = {
+    name: prompt("Enter your name"),  // or get from a dedicated input field
+    email: prompt("Enter your email"),
+    product: document.getElementById("modal-product-name").innerText,
+    size: document.getElementById("modal-size").value,
+    color: document.getElementById("modal-color").value,
+    quantity: document.getElementById("modal-qty").value
+  };
+
+  submitOrder(order);
+
+  // Optional: close modal
+  document.getElementById("product-modal").style.display = "none";
+});
